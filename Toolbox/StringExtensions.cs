@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Toolbox
@@ -16,6 +16,27 @@ namespace Toolbox
 
 
 
+        /// <summary>
+        /// Returns the SHA1 hash of the string.
+        /// </summary>
+        /// <param name="str">The current <see cref="string"/>.</param>
+        public static string ToHash(this string str)
+        {
+            if (str == null)
+                throw new NullReferenceException();
+
+            using (var crypto = new SHA1Managed())
+            {
+                var hash = crypto.ComputeHash(Encoding.UTF8.GetBytes(str));
+                var result = new StringBuilder(hash.Length * 2);
+                foreach (var b in hash)
+                {
+                    result.Append(b.ToString("x2"));
+                }
+
+                return result.ToString();
+            }
+        }
 
         /// <summary>
         /// Returns the string shortened to the given length, including the optional suffix.

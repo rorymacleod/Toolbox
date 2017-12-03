@@ -7,6 +7,20 @@ namespace Toolbox.UnitTests
     public class StringExtensionsTests
     {
         [TestFixture]
+        public class ToHash
+        {
+            [TestCase("Alpha", "58061aa544398a798e33181a443b15b7746fab16")]
+            [TestCase("Alpha1", "2afd643c8465abbf311988fc141204ec1e462c49")]
+            [TestCase("Bravo", "f8b83dde53d52771dda7582ed1b5f5928dec9b2f")]
+            [TestCase("", "da39a3ee5e6b4b0d3255bfef95601890afd80709")]
+            public void ReturnsSHA1Hash(string str, string expected)
+            {
+                Assert.That(str.ToHash(), Is.EqualTo(expected));
+            }
+
+        }
+
+        [TestFixture]
         public class Truncate
         {
             [TestCase("alpha", 10, "alpha")]

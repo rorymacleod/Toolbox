@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="LocalFileMultiSettingsProvider.cs" />
+    <Compile Remove="MultiFileSettingsProvider.cs" />
+    <Compile Remove="MultiSettingsProviderBase.cs" />
+    <Compile Remove="SettingsExtensions.cs" />
+  </ItemGroup>
+
+</Project>

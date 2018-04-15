@@ -42,9 +42,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Caching" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DisposerTests.cs" />
+    <Compile Include="Net\Http\HttpClientProviderTests.cs" />
     <Compile Include="StringExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Toolbox\Toolbox.csproj">
-      <Project>{11598cca-1bdc-4121-baf0-6cdf189142f7}</Project>
+      <Project>{9d01b9b2-f5d4-4021-b39e-9362b37235ff}</Project>
       <Name>Toolbox</Name>
     </ProjectReference>
   </ItemGroup>

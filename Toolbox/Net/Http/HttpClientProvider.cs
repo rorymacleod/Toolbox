@@ -30,21 +30,10 @@ namespace Toolbox.Net.Http
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpClientProvider"/> class to use a private, in-memory, cache.
         /// </summary>
-        public HttpClientProvider() : this(new MemoryCache("HttpClientProvider"))
+        public HttpClientProvider()
         {
+            Cache = new MemoryCache("HttpClientProvider");
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HttpClientProvider"/> class using the specified cache.
-        /// </summary>
-        /// <param name="cache">An <see cref="ObjectCache"/> instance to hold the <see cref="HttpClient"/> 
-        /// instances.</param>
-        public HttpClientProvider(ObjectCache cache)
-        {
-            Cache = cache ?? throw new ArgumentNullException(nameof(cache));
-        }
-
-
 
         /// <summary>
         /// Gets an <see cref="HttpClient"/> object that can be used to access resources on the specified server.
@@ -141,14 +130,31 @@ namespace Toolbox.Net.Http
             return (HttpClient)item.Value;
         }
 
+        /// <summary>
+        /// Invalidates any cached <see cref="HttpClient"/> instance for the given URI so that any subsequent request for
+        /// that URI will use a new instance.
+        /// </summary>
+        /// <param name="baseUri">The base URI assigned to the <c>HttpClient</c> instance to be invalidated.</param>
         public void Invalidate(string baseUri)
         {
-            throw new NotImplementedException();
+            
         }
 
+        /// <summary>
+        /// Invalidates any cached <see cref="HttpClient"/> instance for the given URI so that any subsequent request for
+        /// that URI will use a new instance.
+        /// </summary>
+        /// <param name="baseUri">The base URI assigned to the <c>HttpClient</c> instance to be invalidated.</param>
         public void Invalidate(Uri baseUri)
         {
-            throw new NotImplementedException();
+            if (baseUri == null)
+                throw new ArgumentNullException(nameof(baseUri));
+            if (!baseUri.IsAbsoluteUri)
+                throw new ArgumentException("The URI must be absolute.", nameof(baseUri));
+
+            string key = baseUri.GetLeftPart(UriPartial.Authority);
+            // ReSharper disable once InconsistentlySynchronizedField
+            Cache.Remove(key);
         }
     }
 }

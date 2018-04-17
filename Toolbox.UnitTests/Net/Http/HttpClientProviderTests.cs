@@ -75,16 +75,6 @@ namespace Toolbox.UnitTests.Net.Http
             }
 
             [Test]
-            public void UsesSpecifiedCacheObject()
-            {
-                var cache = new MemoryCache("alpha");
-                var provider = new HttpClientProvider(cache);
-                provider.GetHttpClient("https://bravo.com");
-
-                Assert.That(cache.GetCount(), Is.EqualTo(1));
-            }
-            
-            [Test]
             public void ReturnsNewInstanceForDifferentUri()
             {
                 var provider = new HttpClientProvider();
@@ -137,24 +127,21 @@ namespace Toolbox.UnitTests.Net.Http
 
                 Assert.That(client1, Is.Not.SameAs(client2));
             }
-
-            [Test]
-            public void ReturnsNewInstanceAfterUriHasBeenInvalidated()
-            {
-                Assert.Ignore("The test has not been implemented.");
-            }
         }
 
         [TestFixture]
         public class Invalidate
         {
+            [Test]
+            public void RemovesSpecifiedUriFromCache()
+            {
+                var provider = new HttpClientProvider();
+                var client1 = provider.GetHttpClient("http://alpha");
+                provider.Invalidate(new Uri("http://alpha"));
+                var client2 = provider.GetHttpClient("http://alpha");
 
-        }
-
-        [TestFixture]
-        public class InvalidateAll
-        {
-
+                Assert.That(client1, Is.Not.SameAs(client2));
+            }
         }
     }
 }

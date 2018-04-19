@@ -23,7 +23,7 @@ namespace Toolbox.Net.Http
         /// <summary>
         /// Specifies the maximum lifetime for any cached <see cref="HttpClient"/> instance.
         /// </summary>
-        public TimeSpan TimeToLive { get; set; }
+        public TimeSpan TimeToLive { get; set; } = TimeSpan.FromMinutes(30);
 
 
 

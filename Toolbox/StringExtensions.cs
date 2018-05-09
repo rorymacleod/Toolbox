@@ -82,5 +82,38 @@ namespace Toolbox
 
             return tail != null ? str.Substring(0, length - tail.Length) + tail : str.Substring(0, length);
         }
+        
+                /// <summary>
+        /// Breaks the current string into one or more lines of a specified maximum length, wrapping on word breaks.
+        /// </summary>
+        /// <param name="str">The current <see cref="string"/>.</param>
+        /// <param name="lineLength">The maximum length of the returned lines.</param>
+        /// <returns>A sequence of the lines read from the original string.</returns>
+        public static IEnumerable<string> WrapLines(this string str, int lineLength)
+        {
+            if (string.IsNullOrEmpty(str))
+                yield break;
+
+            var whitespaceChars = new[] { ' ', '\t', '\r', '\n' };
+            int idx = 0;
+            while (idx < str.Length && str.Length - idx > lineLength)
+            {
+                int end = str.LastIndexOfAny(whitespaceChars, idx + lineLength + 1, lineLength);
+                if (end > -1)
+                {
+                    yield return str.Substring(idx, end - idx);
+                    idx = end;
+                }
+
+                yield return str.Substring(idx, end - 1) + '-';
+                idx = end - 1;
+            }
+
+            if (idx < str.Length - 1)
+            {
+                yield return str.Substring(idx);
+            }
+        }
+
     }
 }

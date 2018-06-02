@@ -40,6 +40,35 @@ namespace Toolbox
         }
 
         /// <summary>
+        /// Removes one occurance of the specified string if it appears at the end of the current string.
+        /// </summary>
+        /// <param name="current">The current string.</param>
+        /// <param name="tail">The <see cref="string"/> to remove.</param>
+        public static string TrimEnd(this string current, string tail)
+        {
+            return current.TrimEnd(tail, StringComparison.CurrentCulture);
+        }
+
+        /// <summary>
+        /// Removes one occurance of the specified string if it appears at the end of the current string.
+        /// </summary>
+        /// <param name="current">The current string.</param>
+        /// <param name="tail">The <see cref="string"/> to remove.</param>
+        /// <param name="comparisonType">Determines how the strings are compared.</param>
+        public static string TrimEnd(this string current, string tail, StringComparison comparisonType)
+        {
+            if (current == null)
+                throw new ArgumentNullException(nameof(current));
+
+            if (current.EndsWith(tail, comparisonType))
+            {
+                return current.Substring(0, current.Length - tail.Length);
+            }
+
+            return current;
+        }
+
+        /// <summary>
         /// Returns the string shortened to the given length, including the optional suffix.
         /// </summary>
         /// <param name="str">The current <see cref="string"/>.</param>

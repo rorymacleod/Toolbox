@@ -55,6 +55,8 @@
     <Compile Include="Net\Http\HttpClientProvider.cs" />
     <Compile Include="Net\Http\IHttpClientProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\IObjectReader.cs" />
+    <Compile Include="Reflection\ReflectionObjectReader.cs" />
     <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

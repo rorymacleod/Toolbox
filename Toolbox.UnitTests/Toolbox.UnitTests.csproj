@@ -59,9 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DisposerTests.cs" />
     <Compile Include="Net\Http\HttpClientProviderTests.cs" />
-    <Compile Include="StringExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

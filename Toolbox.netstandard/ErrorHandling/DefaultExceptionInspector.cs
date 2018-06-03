@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -103,14 +104,26 @@ namespace Toolbox.ErrorHandling
                 }
             }
 
-            // Add Data dictionary values.
-            if (detail != null && exception.Data.Count > 0) 
+            // Add Data dictionary and message data values.
+            if (detail != null)
             {
+                var data = new SortedDictionary<string, string>();
                 foreach (string key in exception.Data.Keys)
                 {
-                    detail.AppendLine($"- {key}: {Convert.ToString(exception.Data[key])}");
+                    data[key] = Convert.ToString(exception.Data[key]);
+                }
+
+                if (exception is ISupportsMessageData dataEx)
+                {
+                    dataEx.GetMessageData(data);
+                }
+
+                foreach (var pair in data)
+                {
+                    detail.AppendLine($"- {pair.Key}: {pair.Value}");
                 }
             }
+
 
             // Add the extra details to the basic error message.
             if (detail?.Length > 0)

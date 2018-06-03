@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Toolbox.ErrorHandling
 {
@@ -61,25 +62,46 @@ namespace Toolbox.ErrorHandling
         }
 
         /// <summary>
+        /// Populates the given dictionary with data that can be used to build a detailed error message.
+        /// </summary>
+        /// <param name="exception">The exception to inspect.</param>
+        /// <param name="data">The <see cref="IDictionary{TKey, TValue}"/> to add data to.</param>
+        public virtual void GetData(Exception exception, IDictionary<string, string> data)
+        {
+            Next?.GetData(exception, data);
+        }
+
+        /// <summary>
         /// Gets a detailed error message built from the exception's own message and its properties.
         /// </summary>
         /// <param name="exception">The exception to inspect.</param>
+        /// <param name="data">Dictionary of name-value pairs to be used in building a detailed error message.</param>
         /// <param name="formatting">Optional <see cref="ExceptionFormatting"/> value specifying how to format the
         /// error message.</param>
-        public abstract string GetMessage(Exception exception, ExceptionFormatting formatting = ExceptionFormatting.SingleLine);
+        public virtual string GetMessage(Exception exception, IDictionary<string, string> data, 
+            ExceptionFormatting formatting = ExceptionFormatting.SingleLine)
+        {
+            return Next?.GetMessage(exception, data, formatting) ?? string.Empty;
+        }
 
         /// <summary>
         /// Indicates whether the exception contains significant information, meaning that it is not a wrapper or
         /// aggregate of other exceptions.
         /// </summary>
         /// <param name="exception">The exception to inspect.</param>
-        public abstract bool IsSignificant(Exception exception);
+        public virtual bool IsSignificant(Exception exception)
+        {
+            return Next?.IsSignificant(exception) ?? true;
+        }
 
         /// <summary>
         /// Indicates whether the exception represents a transient error, meaning that the operation may succeed if it
         /// is retried.
         /// </summary>
         /// <param name="exception">The exception to inspect.</param>
-        public abstract bool IsTransient(Exception exception);
+        public virtual bool IsTransient(Exception exception)
+        {
+            return Next?.IsTransient(exception) ?? false;
+        }
     }
 }

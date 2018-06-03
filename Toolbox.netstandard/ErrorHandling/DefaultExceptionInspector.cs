@@ -43,12 +43,35 @@ namespace Toolbox.ErrorHandling
 
 
         /// <summary>
+        /// Populates the given dictionary with data that can be used to build a detailed error message.
+        /// </summary>
+        /// <param name="exception">The exception to inspect.</param>
+        /// <param name="data">The <see cref="IDictionary{TKey, TValue}"/> to add data to.</param>
+        public virtual void GetData(Exception exception, IDictionary<string, string> data)
+        {
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+
+            foreach (string key in exception.Data.Keys)
+            {
+                data[key] = Convert.ToString(exception.Data[key]);
+            }
+
+            if (exception is ISupportsMessageData dataEx)
+            {
+                dataEx.GetMessageData(data);
+            }
+        }
+
+        /// <summary>
         /// Gets a detailed error message built from the exception's own message and its properties.
         /// </summary>
         /// <param name="exception">The exception to inspect.</param>
+        /// <param name="data">Dictionary of name-value pairs to be used in building a detailed error message.</param>
         /// <param name="formatting">Optional <see cref="ExceptionFormatting"/> value specifying how to format the
         /// error message.</param>
-        public string GetMessage(Exception exception, ExceptionFormatting formatting = ExceptionFormatting.SingleLine)
+        public string GetMessage(Exception exception, IDictionary<string, string> data, 
+            ExceptionFormatting formatting = ExceptionFormatting.SingleLine)
         {
             if (exception == null)
                 throw new ArgumentNullException(nameof(exception));
@@ -104,26 +127,14 @@ namespace Toolbox.ErrorHandling
                 }
             }
 
-            // Add Data dictionary and message data values.
-            if (detail != null)
+            // Add message data values.
+            if (detail != null && data != null)
             {
-                var data = new SortedDictionary<string, string>();
-                foreach (string key in exception.Data.Keys)
-                {
-                    data[key] = Convert.ToString(exception.Data[key]);
-                }
-
-                if (exception is ISupportsMessageData dataEx)
-                {
-                    dataEx.GetMessageData(data);
-                }
-
                 foreach (var pair in data)
                 {
                     detail.AppendLine($"- {pair.Key}: {pair.Value}");
                 }
             }
-
 
             // Add the extra details to the basic error message.
             if (detail?.Length > 0)

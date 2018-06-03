@@ -10,6 +10,18 @@ namespace Toolbox.ErrorHandling
     public static class ExceptionInspectorExtensions
     {
         /// <summary>
+        /// Returns a dictionary containing data from the exception that can be used to build a detailed error message.
+        /// </summary>
+        /// <param name="inspector">The current <see cref="IExceptionInspector"/>.</param>
+        /// <param name="exception">The exception to inspect.</param>
+        public static SortedDictionary<string, string> GetData(this IExceptionInspector inspector, Exception exception)
+        {
+            var data = new SortedDictionary<string, string>();
+            inspector.GetData(exception, data);
+            return data;
+        }
+
+        /// <summary>
         /// Gets all error messages from the significant exceptions reachable from the given exception combined into a
         /// single message.
         /// </summary>
@@ -79,6 +91,25 @@ namespace Toolbox.ErrorHandling
             }
 
             return sb.ToString().TrimEnd();
+        }
+
+        /// <summary>
+        /// Gets a detailed error message built from the exception's own message and its properties.
+        /// </summary>
+        /// <param name="inspector">The current <see cref="IExceptionInspector"/>.</param>
+        /// <param name="exception">The exception to inspect.</param>
+        /// <param name="formatting">Optional <see cref="ExceptionFormatting"/> value specifying how to format the
+        /// error message.</param>
+        public static string GetMessage(this IExceptionInspector inspector, Exception exception,
+            ExceptionFormatting formatting = ExceptionFormatting.SingleLine)
+        {
+            IDictionary<string, string> data = null;
+            if (formatting == ExceptionFormatting.Detailed)
+            {
+                data = inspector.GetData(exception);
+            }
+
+            return inspector.GetMessage(exception, data, formatting);
         }
 
         /// <summary>

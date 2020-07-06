@@ -1,0 +1,8 @@
+- Trunk-based development
+- Naming
+  - `feature/`
+  - `release/`
+  - `user/[name]/`
+- Rebase: Do not merge into the trunk (other than when accepting a pull request)
+- Squash: Squash commits when accepting a pull request.
+- Pull request title and description become the merge commit's message.

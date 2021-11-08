@@ -14,8 +14,4 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Toolbox.netstandard\Toolbox.netstandard.csproj" />
-  </ItemGroup>
-
 </Project>

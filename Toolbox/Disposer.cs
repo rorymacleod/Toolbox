@@ -1,4 +1,6 @@
-﻿namespace Toolbox;
+﻿using System;
+
+namespace Toolbox;
 
 /// <summary>
 /// An object that invokes an arbitrary <see cref="System.Action"/> when it is disposed.

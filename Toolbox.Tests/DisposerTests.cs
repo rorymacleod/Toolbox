@@ -14,11 +14,11 @@ public class DisposerTests
             callCount++;
         }
 
-        using (var disposer = new Disposer(action))
+        using (new Disposer(action))
         {
             Assert.True(true);
         }
-        
+
         callCount.Should().Be(1);
     }
 }

@@ -45,7 +45,7 @@ public class StringExtensionsTests
                 ex.ParamName.Should().Be("length");
                 return;
             }
-                
+
             Assert.True(false, "Expected exception was not thrown.");
         }
 
@@ -71,7 +71,7 @@ public class StringExtensionsTests
                 ex.ParamName.Should().Be("length");
                 return;
             }
-                
+
             Assert.True(false, "Exception was not thrown");
         }
 
@@ -97,8 +97,57 @@ public class StringExtensionsTests
                 ex.ParamName.Should().Be("length");
                 return;
             }
-                
+
             Assert.True(false, "Expected exception was not thrown.");
         }
     }
+
+    //public class WordWrap
+    //{
+    //    [Test]
+    //    public void ReturnsEmptyListForEmptyString()
+    //    {
+    //        var actual = string.Empty.WrapLines(10);
+
+    //        Assert.That(actual.Count(), Is.EqualTo(0));
+    //    }
+
+    //    [TestCase("A", new[] { "A" })]
+    //    [TestCase("AlphaBravo", new[] { "AlphaBravo" })]
+    //    public void ReturnsSingleLineIfWithinLineLength(string source, string[] expected)
+    //    {
+    //        var actual = source.WrapLines(10);
+    //        Assert.That(actual, Is.EqualTo(expected));
+    //    }
+
+    //    [TestCase("abc def ghi jkl", new[] { "abc def", "ghi jkl" })]
+    //    [TestCase("abc       def ghi", new[] { "abc", "def ghi" })]
+    //    [TestCase("AlphaBravo Zulu", new[] { "AlphaBravo", "Zulu" })]
+    //    public void ReturnsLinesWrappedOnSpaces(string source, string[] expected)
+    //    {
+    //        var actual = source.WrapLines(10);
+    //        Assert.That(actual, Is.EqualTo(expected));
+    //    }
+
+    //    [TestCase("abc def__ghi jkl", new[] { "abc", "def__ghi", "jkl" })]
+    //    [TestCase("abc def\t\tghi jkl", new[] { "abc def", "ghi jkl" })]
+    //    public void ReturnsLinesWrappedOnTabs(string source, string[] expected)
+    //    {
+    //        var actual = source.WrapLines(10);
+    //        Assert.That(actual, Is.EqualTo(expected));
+    //    }
+
+    //    [TestCase("abc def__ghi jkl", new[] { "abc", "def__ghi", "jkl" })]
+    //    [TestCase("abc def\t\tghi jkl", new[] { "abc def", "ghi jkl" })]
+    //    public void PreservesNewLines()
+    //    {
+    //        Assert.Ignore("The test has not been implemented.");
+    //    }
+
+    //    [Test]
+    //    public void PreservesWhitespaceAfterNewLines()
+    //    {
+    //        Assert.Ignore("The test has not been implemented.");
+    //    }
+    //}
 }

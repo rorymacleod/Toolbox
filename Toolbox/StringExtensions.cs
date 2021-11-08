@@ -27,7 +27,7 @@ public static class StringExtensions
     }
 
     /// <summary>
-    /// Removes one occurance of the specified string if it appears at the end of the current string.
+    /// Removes one occurrence of the specified string if it appears at the end of the current string.
     /// </summary>
     public static string TrimEnd(this string current, string toRemove)
     {
@@ -35,7 +35,7 @@ public static class StringExtensions
     }
 
     /// <summary>
-    /// Removes one occurance of the specified string if it appears at the end of the current string.
+    /// Removes one occurrence of the specified string if it appears at the end of the current string.
     /// </summary>
     public static string TrimEnd(this string current, string toRemove, StringComparison comparisonType)
     {
